@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text ,TextInput, StyleSheet, KeyboardAvoidingView,
+  View, Text ,TextInput, StyleSheet, KeyboardAvoidingView,Keyboard
 } from 'react-native';
 
 import AppBar from '../components/AppBar';
@@ -12,7 +12,7 @@ return(
   <KeyboardAvoidingView style={styles.container} behavior="height">
     <AppBar/>
     <View style={styles.inputContainer}>
-      <TextInput value="" multiline style={styles.input}/>
+      <TextInput value="" multiline style={styles.input} onSubmitEditing={Keyboard.dismiss}/>
     </View>
     <CircleButton name="check"/>
   </KeyboardAvoidingView>
