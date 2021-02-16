@@ -58,7 +58,7 @@ export default function MemoDetailScreen(){
           本文用なので使い方を間違えると不自然に見えることもありますので注意。
         </Text>
       </ScrollView>
-      <CircleButton style={{top: 160,bottom: 'auto'}}>+</CircleButton>
+      <CircleButton style={{top: 160,bottom: 'auto'}} name="edit-2"/>
     </View>
   );
 }
