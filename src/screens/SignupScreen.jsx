@@ -1,27 +1,27 @@
 import React from 'react';
 import {
-  View, Text,TextInput, StyleSheet 
+  View, Text,TextInput, StyleSheet ,Alert, TouchableOpacity
 } from 'react-native';
 
 
-import AppBar from '../components/AppBar';
 import Button from '../components/button';
 
 export default function SignupScreen(){
 
   return(
     <View style={styles.container}>
-      <AppBar/>
       <View style={styles.inner}>
         <Text style={styles.title}>Signup</Text>
         <TextInput style={styles.input} value="Email Adress"/>
         <TextInput style={styles.input} value="password"/>
         <View style={styles.buttonContainer}>
-          <Button label="submit"/>
+          <Button label="submit" onPress={()=>{Alert.alert('here')}}/>
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registere?</Text>
-          <Text style={styles.footerLink}>Login here!</Text>
+          <TouchableOpacity>
+            <Text style={styles.footerLink}>Login here!</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -64,7 +64,7 @@ const styles=StyleSheet.create({
   footerLink:{
     fontSize: 14,
     lineHeight: 24,
-    color: '#ffffff',
+    color: 'green',
   }
 
 });
