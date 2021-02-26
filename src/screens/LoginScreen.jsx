@@ -1,28 +1,57 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
-  View, Text,TextInput, StyleSheet ,TouchableOpacity
+  View, Text,TextInput, StyleSheet ,TouchableOpacity,Alert
 } from 'react-native';
-
+import firebase from 'firebase';
 
 import Button from '../components/button';
 
 export default function LoginScreen(props){
   const { navigation } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handlePress(){
+    firebase.auth().signInWithEmailAndPassword(email,password)
+    .then((userCredential)=>{
+      const{user} = userCredential;
+      console.log(user.uid);
+      navigation.reset({
+        index : 0,
+        routes: [{ name : 'MemoList' }],
+      });
+    })
+    .catch((error)=>{
+      Alert.alert(error.code);
+    });
+  }
+
   return(
     <View style={styles.container}>
       <View style={styles.inner}>
         <Text style={styles.title}>Login</Text>
-        <TextInput style={styles.input} value="Email Adress"/>
-        <TextInput style={styles.input} value="password"/>
+        <TextInput 
+          style={styles.input} 
+          value={email} 
+          onChangeText={(text)=>{setEmail(text);}}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          placeholder="Email Address"
+          textContentType="emailAddress"
+        />
+        <TextInput 
+          style={styles.input} 
+          value={password}
+          onChangeText={(text)=>{setPassword(text);}}
+          autoCapitalize="none"
+          placeholder="password"
+          secureTextEntry={true}
+          textContentType="password"
+        />
         <View style={styles.buttonContainer}>
-          <Button label="submit"
+          <Button 
             label = "submit"
-            onPress={()=>{
-              navigation.reset({
-                index : 0,
-                routes: [{ name : 'MemoList' }],
-              });
-            }}
+            onPress={handlePress}
           />
         </View>
         <View style={styles.footer}>
