@@ -6,8 +6,8 @@ import {
 
 import Button from '../components/button';
 
-export default function LoginScreen(){
-
+export default function LoginScreen(props){
+  const { navigation } = props;
   return(
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -15,11 +15,26 @@ export default function LoginScreen(){
         <TextInput style={styles.input} value="Email Adress"/>
         <TextInput style={styles.input} value="password"/>
         <View style={styles.buttonContainer}>
-          <Button label="submit"/>
+          <Button label="submit"
+            label = "submit"
+            onPress={()=>{
+              navigation.reset({
+                index : 0,
+                routes: [{ name : 'MemoList' }],
+              });
+            }}
+          />
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registere?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={()=>{
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'Signup'}],
+              });
+            }}
+          >
 
             <Text style={styles.footerLink}>Sign up here!</Text>
           </TouchableOpacity>
@@ -65,7 +80,7 @@ const styles=StyleSheet.create({
   footerLink:{
     fontSize: 14,
     lineHeight: 24,
-    color: '#ffffff',
+    color: 'blue',
   }
 
 });

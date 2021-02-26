@@ -6,8 +6,8 @@ import {
 
 import Button from '../components/button';
 
-export default function SignupScreen(){
-
+export default function SignupScreen(props){
+  const{navigation} = props;
   return(
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -15,11 +15,24 @@ export default function SignupScreen(){
         <TextInput style={styles.input} value="Email Adress"/>
         <TextInput style={styles.input} value="password"/>
         <View style={styles.buttonContainer}>
-          <Button label="submit" onPress={()=>{Alert.alert('here')}}/>
+          <Button label="submit" onPress={()=>{
+            navigation.reset({
+              index : 0,
+              routes : [{ name: 'MemoList' }],
+              });
+            }}
+          />
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registere?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity 
+            onPress={()=>{navigation.reset({
+              index: 0,
+              routes: [{name:'Login'}],
+              
+              });
+            }}
+          >
             <Text style={styles.footerLink}>Login here!</Text>
           </TouchableOpacity>
         </View>

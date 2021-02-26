@@ -6,13 +6,14 @@ import {
 import CircleButton from '../components/CircleButton';
 
 
-export default function MemoEditScreen(){
+export default function MemoEditScreen(props){
+  const {navigation} = props;
 return(
   <KeyboardAvoidingView style={styles.container} behavior="height">
     <View style={styles.inputContainer}>
       <TextInput value="買い物リスト" multiline style={styles.input}/>
     </View>
-    <CircleButton name="check" onPress={()=>{Alert.alert('Pressed!')}}/>
+    <CircleButton name="check" onPress={()=>{ navigation.goBack();}}/>
   </KeyboardAvoidingView>
   
 );

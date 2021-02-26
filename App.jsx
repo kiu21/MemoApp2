@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator,CardStyleInterpolators} from '@react-navigation/stack';
 
 import MemoList from './src/components/MemoList';
 import MemoListScreen from './src/screens/MemoListScreen';
@@ -22,14 +22,31 @@ export default function App() {
        screenOptions={{
         headerStyle: {backgroundColor: '#467FD3'},
         headerTitleStyle : {color: '#ffffff'},
-        headerTitle: 'Memo App'
+        headerTitle: 'Memo App',
+        headerTintColor: 'white',
+        headerBackTitle: 'Back',
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        gestreEnabled : true,
+        gestureDirection : 'horizontal',
        }}>
-        <Stack.Screen name='Home' component={MemoListScreen}/>
+        <Stack.Screen name='MemoList' component={MemoListScreen}/>
         <Stack.Screen name='MemoDetail' component={MemoDetailScreen}/>
         <Stack.Screen name='MemoEdit' component={MemoEditScreen}/>
         <Stack.Screen name='MemoCreate' component={MemoCreateScreen}/>
-        <Stack.Screen name='Login' component={LoginScreen}/>
-        <Stack.Screen name='Signup' component={SignupScreen}/>
+        <Stack.Screen
+          name='Login'
+          component={LoginScreen}
+          options = {{
+            cardStyleInterpolator : CardStyleInterpolators.forFadeFromBottomAndroid,
+          }}
+          />
+        <Stack.Screen 
+          name='Signup'   
+          component={SignupScreen}
+          options = {{
+            cardStyleInterpolator : CardStyleInterpolators.forFadeFromBottomAndroid,
+          }}
+            />
       </Stack.Navigator>
     </NavigationContainer>
   );
