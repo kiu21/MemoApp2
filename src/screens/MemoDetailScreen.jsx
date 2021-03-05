@@ -1,10 +1,37 @@
-import React from 'react';
+import React ,{useEffect} from 'react';
+import {shape,string} from 'prop-types';
 import { View, ScrollView, Text, StyleSheet} from 'react-native';
+
+import firebase from 'firebase';
 
 import CircleButton from '../components/CircleButton';
 
+
 export default function MemoDetailScreen(props){
-  const{navigation}=props;
+  const{navigation,route}=props;
+  const{id} = route.params;
+  console.log(id);
+
+  useEffect(()=>{
+    const {currentUser} = firebase.auth();
+    let unsubscribe=()=>{};
+    if(currentUser){
+      const db = firebase.firestore();
+      const ref = db.collection(`user/${currentUser.uid}/memos`).doc(id);
+      unsubscribe = ref.onSnapshot((doc)=>{
+          console.log(doc.id,doc.data());
+        const data = doc.data();
+        setMemo({
+          id: doc.id,
+          bodyText: data.bodyText,
+          updatedAt: data.updatedAt.toDate(),
+        });
+      });
+    }
+    return unsubscribe;
+
+  },[]);
+
   return(
     <View style={styles.container}>
       <View style={styles.memoHeader}>
@@ -14,47 +41,7 @@ export default function MemoDetailScreen(props){
       <ScrollView style={styles.memoBody}>
           <Text style={styles.memoText}>
           買い物リスト
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。      書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
-          書体やレイアウトなどをかくにんするために用います。
-          本文用なので使い方を間違えると不自然に見えることもありますので注意。
+        
         </Text>
       </ScrollView>
       <CircleButton style={{top: 60,bottom: 'auto'}} name="edit-2"
@@ -63,6 +50,11 @@ export default function MemoDetailScreen(props){
   );
 }
 
+MemoDetailScreen.propTypes ={
+  route: shape({
+    params: shape({id:string}),
+  }).isRequired,
+};
 
 
 const styles=StyleSheet.create({
